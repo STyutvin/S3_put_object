@@ -7,7 +7,7 @@ def main():
     )
 
     # The file to upload, change this path if needed
-    source_file = "/data/kc_house_data.csv"
+    source_file = "/tmp/kc_house_data.csv"
 
     # The destination bucket and filename on the MinIO server
     bucket_name = "python-minio-bucket"
