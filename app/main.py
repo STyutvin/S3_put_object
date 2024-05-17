@@ -1,6 +1,6 @@
 from minio import Minio
 # Initialize MinIO client
-client = Minio('localhost:9001',
+client = Minio('localhost:9000',
                access_key='minio_access_key',
                secret_key='minio_secret_key',
                secure=False)
