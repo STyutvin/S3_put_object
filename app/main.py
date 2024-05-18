@@ -1,37 +1,26 @@
-def main():
-    # Create a client with the MinIO server playground, its access key
-    # and secret key.
-    client = Minio("play.min.io",
-        access_key="minio-access-key",
-        secret_key="minio-secret-key",
-    )
+from minio import Minio
+# Initialize MinIO client
+client = Minio('minio',
+               access_key='minio_access_key',
+               secret_key='minio_secret_key',
+               secure=False)
 
-    # The file to upload, change this path if needed
-    source_file = "/data/kc_house_data.csv"
+source_file = "d:/Geek_Brains/Project/misc/minio-python-app/app/tmp/kc_house_data.csv"
+bucket_name = "python-test-bucket"
+destination_file = "kc_house_data.csv"
 
-    # The destination bucket and filename on the MinIO server
-    bucket_name = "python-minio-bucket"
-    destination_file = "kc_house_data.csv"
+# Make a bucket
+found = client.bucket_exists(bucket_name)
+if not found:
+    client.make_bucket(bucket_name)
+    print("Created bucket", bucket_name)
+else:
+    print("Bucket", bucket_name, "already exists")
 
-    # Make the bucket if it doesn't exist.
-    found = client.bucket_exists(bucket_name)
-    if not found:
-        client.make_bucket(bucket_name)
-        print("Created bucket", bucket_name)
-    else:
-        print("Bucket", bucket_name, "already exists")
+# Upload an object
+client.fput_object(bucket_name, destination_file, source_file)
 
-    # Upload the file, renaming it in the process
-    client.fput_object(
-        bucket_name, destination_file, source_file,
-    )
-    print(
-        source_file, "successfully uploaded as object",
-        destination_file, "to bucket", bucket_name,
-    )
-
-if __name__ == "__main__":
-    try:
-        main()
-    except S3Error as exc:
-        print("error occurred.", exc)
+# List objects
+objects = client.list_objects(bucket_name, recursive=True)
+for obj in objects:
+    print(obj.object_name)
