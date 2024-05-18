@@ -10,7 +10,12 @@ bucket_name = "python-test-bucket"
 destination_file = "kc_house_data.csv"
 
 # Make a bucket
-client.make_bucket(bucket_name)
+found = client.bucket_exists(bucket_name)
+if not found:
+    client.make_bucket(bucket_name)
+    print("Created bucket", bucket_name)
+else:
+    print("Bucket", bucket_name, "already exists")
 
 # Upload an object
 client.fput_object(bucket_name, destination_file, source_file)
