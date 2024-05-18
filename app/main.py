@@ -5,7 +5,7 @@ client = Minio('localhost:9000',
                secret_key='minio_secret_key',
                secure=False)
 
-source_file = "/tmp/kc_house_data.csv"
+source_file = "d:/Geek_Brains/Project/misc/minio-python-app/app/tmp/kc_house_data.csv"
 bucket_name = "python-test-bucket"
 destination_file = "kc_house_data.csv"
 
