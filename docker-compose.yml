@@ -16,7 +16,7 @@ services:
     networks:
       - app-tier
   myapp:
-    build: ./app
+    image: minio-python-docker:3
     networks:
       - app-tier
     environment:
